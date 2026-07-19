@@ -6,7 +6,7 @@ import { api } from "@/lib/api";
 import { DIVISIONS } from "@/lib/constants";
 import PropertyCard from "@/components/PropertyCard";
 
-export default function PropertiesPage() {
+export default function PropertiesContext() {
   const searchParams = useSearchParams();
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
