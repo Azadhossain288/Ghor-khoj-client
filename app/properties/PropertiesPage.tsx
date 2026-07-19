@@ -1,5 +1,5 @@
 import PropertiesContext from "./PropertiesContent";
-
+import { Suspense } from "react";
 
 
 export default function PropertiesPage() {
