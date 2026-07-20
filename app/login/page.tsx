@@ -49,7 +49,7 @@ export default function LoginPage() {
             callbackURL: `${window.location.origin}/dashboard`,
           })
         }
-        className="mt-3 w-full rounded-full border border-slate-300 py-2.5 font-semibold text-primary"
+        className="mt-3 w-full rounded-full border border-slate-300 py-2.5 font-semibold text-blue-600"
       >
         Continue with Google
       </button>
