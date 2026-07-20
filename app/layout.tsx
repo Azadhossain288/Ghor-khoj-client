@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import WaveBackground from "@/components/WaveBackground";
 
 export const metadata = { title: "GhorKhoj — AI-Powered Real Estate" };
 
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <WaveBackground />
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />
