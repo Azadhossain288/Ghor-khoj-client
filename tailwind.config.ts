@@ -5,11 +5,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#0F172A", // deep navy
-        accent: "#F59E0B", // amber
-        success: "#10B981", // emerald
-        neutral: "#F8FAFC",
-      },
+     primary: "#0F172A",
+     surface: "#1B2436",
+     accent: "#D7F32C", 
+    success: "#10B981",
+    neutral: "#212B42",
+   },
       fontFamily: {
         display: ["Fraunces", "serif"],
         sans: ["Inter", "sans-serif"],
