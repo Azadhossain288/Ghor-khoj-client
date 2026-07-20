@@ -127,9 +127,9 @@ export default function DashboardPage() {
                     <tr key={p._id} className="border-t border-slate-800">
                       <td className="p-3 font-medium text-white">{p.title}</td>
                       <td className="p-3 capitalize text-slate-400">{p.type}</td>
-                      <td className="p-3">{p.location}</td>
-                      <td className="p-3">৳{p.price.toLocaleString()}</td>
-                      <td className="p-3">{p.views}</td>
+                      <td className="p-3 text-slate-300">{p.location}</td>
+                      <td className="p-3 font-medium text-white">৳{p.price.toLocaleString()}</td>
+                      <td className="p-3 text-slate-300">{p.views}</td>
                       <td className="p-3 space-x-3">
                         <Link href={`/properties/${p._id}`} className="text-accent">View</Link>
                         <Link href={`/properties/edit/${p._id}`} className="text-white underline">Edit</Link>
