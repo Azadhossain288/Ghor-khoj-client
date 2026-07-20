@@ -28,14 +28,14 @@ export default function ManagePropertiesPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 md:px-8">
-      <h1 className="mb-6 text-2xl font-bold text-primary">Manage Your Properties</h1>
+      <h1 className="mb-6 text-2xl font-bold text-white">Manage Your Properties</h1>
 
       {items.length === 0 ? (
         <p className="text-slate-400">You haven't listed any properties yet.</p>
       ) : (
-        <div className="overflow-x-auto rounded-2xl border border-slate-200">
+        <div className="overflow-x-auto rounded-2xl border border-slate-800">
           <table className="w-full text-left text-sm">
-            <thead className="bg-neutral text-slate-500">
+            <thead className="bg-neutral text-slate-400">
               <tr>
                 <th className="p-3">Title</th>
                 <th className="p-3">Location</th>
@@ -46,14 +46,14 @@ export default function ManagePropertiesPage() {
             </thead>
             <tbody>
               {items.map((p) => (
-                <tr key={p._id} className="border-t border-slate-100">
-                  <td className="p-3 font-medium text-primary">{p.title}</td>
+                <tr key={p._id} className="border-t border-slate-800">
+                  <td className="p-3 font-medium text-white">{p.title}</td>
                   <td className="p-3">{p.location}</td>
                   <td className="p-3">৳{p.price.toLocaleString()}</td>
                   <td className="p-3">{p.views}</td>
                   <td className="p-3 space-x-3">
                     <Link href={`/properties/${p._id}`} className="text-accent">View</Link>
-                    <Link href={`/properties/edit/${p._id}`} className="text-primary underline">Edit</Link>
+                    <Link href={`/properties/edit/${p._id}`} className="text-white underline">Edit</Link>
                     <button onClick={() => handleDelete(p._id)} className="text-red-500">Delete</button>
                   </td>
                 </tr>

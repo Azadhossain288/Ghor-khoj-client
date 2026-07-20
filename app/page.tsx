@@ -47,45 +47,81 @@ const FAQS = [
 
 export default function HomePage() {
   const [featured, setFeatured] = useState<any[]>([]);
+  const [totalListings, setTotalListings] = useState<number | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams({ sort: "newest", limit: "4" });
-    api.getProperties(params).then((d) => setFeatured(d.items || []));
+    api.getProperties(params).then((d) => {
+      setFeatured(d.items || []);
+      setTotalListings(d.total ?? 0);
+    });
   }, []);
 
   return (
     <div className="font-sans">
-      {/* 1. HERO */}
-      <section className="relative flex h-[68vh] min-h-[520px] items-center overflow-hidden bg-primary">
-        <img
-          src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1600&auto=format&fit=crop"
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/20" />
-        <div className="relative mx-auto max-w-4xl px-4 text-center text-white md:px-8">
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-accent">Dhaka · Chattogram · Sylhet</p>
-          <h1 className="font-display text-4xl font-semibold leading-tight md:text-6xl">
-            Find your next home,
-            <br />
-            <span className="text-accent">guided by AI.</span>
-          </h1>
-          <p className="mx-auto mt-5 max-w-xl text-white/80">
-            Search real listings, get recommendations that improve as you browse, and ask our
-            assistant anything — it checks the live database before it answers.
-          </p>
-          <Link
-            href="/properties"
-            className="mt-8 inline-block rounded-full bg-accent px-8 py-3 font-semibold text-primary transition hover:scale-105"
-          >
-            Explore Properties
-          </Link>
-        </div>
-      </section>
+      
 
-      {/* Signature element — scrolling neighborhood ticker */}
-      <div className="overflow-hidden border-y border-slate-200 bg-white py-3">
+      {/* 1. HERO — text left, staggered 3-image collage right */}
+   <section className="relative overflow-hidden bg-primary px-4 py-16 text-white md:px-8">
+   <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2 md:items-center">
+    {/* Left — copy, CTA, stats */}
+    <div>
+      <p className="mb-4 text-xs uppercase tracking-[0.35em] text-accent">Dhaka · Chattogram · Sylhet</p>
+      <h1 className="font-display text-5xl font-black uppercase leading-[0.95] tracking-tight md:text-6xl">
+        Find a home
+        <br />
+        <span className="text-white/40">that fits</span>
+        <br />
+        <span className="text-accent">your life.</span>
+      </h1>
+      <p className="mt-6 max-w-sm text-white/70">
+        Search real listings, get recommendations that improve as you browse, and ask
+        our AI Assistant anything — it checks the live database before it answers.
+      </p>
+      <Link
+        href="/properties"
+        className="mt-8 inline-block rounded-full bg-accent px-8 py-3 font-semibold text-primary transition hover:scale-105"
+      >
+        Explore Properties
+      </Link>
+
+      <div className="mt-12 flex gap-10">
+        <div>
+          <p className="font-display text-4xl font-bold text-accent">
+            {totalListings === null ? "—" : totalListings}
+          </p>
+          <p className="text-xs uppercase tracking-wide text-white/50">Live Listings</p>
+        </div>
+        <div>
+          <p className="font-display text-4xl font-bold text-accent">8</p>
+          <p className="text-xs uppercase tracking-wide text-white/50">Divisions Covered</p>
+        </div>
+      </div>
+    </div>
+
+    {/* Right — staggered 3-image collage */}
+    <div className="relative mx-auto h-[420px] w-full max-w-md">
+      <img
+        src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop"
+        alt="Modern living room interior"
+        className="absolute left-0 top-0 h-64 w-64 rounded-3xl border-4 border-primary object-cover shadow-2xl"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=800&auto=format&fit=crop"
+        alt="Apartment building exterior"
+        className="absolute right-0 top-10 h-48 w-48 rounded-3xl border-4 border-primary object-cover shadow-2xl"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=800&auto=format&fit=crop"
+        alt="Bright modern bedroom"
+        className="absolute bottom-0 left-16 h-52 w-52 rounded-3xl border-4 border-primary object-cover shadow-2xl"
+      />
+    </div>
+  </div>
+</section>
+
+      <div className="overflow-hidden border-y border-slate-800 bg-surface py-3">
         <div className="flex animate-[marquee_28s_linear_infinite] gap-10 whitespace-nowrap text-sm font-medium text-slate-400">
           {[...NEIGHBORHOODS, ...NEIGHBORHOODS, ...NEIGHBORHOODS].map((n, i) => (
             <span key={i} className="flex items-center gap-10">
@@ -97,10 +133,9 @@ export default function HomePage() {
         <style>{`@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-33.33%); } }`}</style>
       </div>
 
-      {/* 2. FEATURED PROPERTIES */}
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8">
         <div className="mb-8 flex items-end justify-between">
-          <h2 className="font-display text-2xl font-semibold text-primary md:text-3xl">Featured Properties</h2>
+          <h2 className="font-display text-2xl font-semibold text-white md:text-3xl">Featured Properties</h2>
           <Link href="/properties" className="text-sm font-medium text-accent">View all →</Link>
         </div>
         {featured.length > 0 ? (
@@ -110,45 +145,42 @@ export default function HomePage() {
             ))}
           </div>
         ) : (
-          <p className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-400">
+          <p className="rounded-2xl border border-dashed border-slate-700 p-8 text-center text-slate-400">
             No properties listed yet — add the first one from "Add Property".
           </p>
         )}
       </section>
 
-      {/* 3. CATEGORIES */}
       <section className="bg-neutral py-16">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <h2 className="mb-8 font-display text-2xl font-semibold text-primary md:text-3xl">Browse by Category</h2>
+          <h2 className="mb-8 font-display text-2xl font-semibold text-white md:text-3xl">Browse by Category</h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
             {CATEGORIES.map((c) => (
               <Link
                 key={c.type}
                 href={`/properties?type=${c.type}`}
-                className="flex flex-col items-center gap-2 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                className="flex flex-col items-center gap-2 rounded-2xl border border-slate-800 bg-surface p-8 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md"
               >
                 <span className="text-3xl">{c.emoji}</span>
-                <span className="font-medium text-primary">{c.label}</span>
+                <span className="font-medium text-white">{c.label}</span>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 4. WHY GHORKHOJ */}
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8">
-        <h2 className="mb-8 font-display text-2xl font-semibold text-primary md:text-3xl">Why GhorKhoj</h2>
+        <h2 className="mb-8 font-display text-2xl font-semibold text-white md:text-3xl">Why GhorKhoj</h2>
         <div className="grid gap-6 md:grid-cols-3">
           {FEATURES.map((f) => (
-            <div key={f.title} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="font-semibold text-primary">{f.title}</h3>
-              <p className="mt-2 text-sm text-slate-500">{f.desc}</p>
+            <div key={f.title} className="rounded-2xl border border-slate-800 bg-surface p-6 shadow-sm">
+              <h3 className="font-semibold text-white">{f.title}</h3>
+              <p className="mt-2 text-sm text-slate-400">{f.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 5. HOW IT WORKS */}
       <section className="bg-primary py-16 text-white">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <h2 className="mb-8 font-display text-2xl font-semibold md:text-3xl">How It Works</h2>
@@ -166,19 +198,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. TESTIMONIALS */}
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8">
-        <h2 className="mb-8 font-display text-2xl font-semibold text-primary md:text-3xl">What People Say</h2>
+        <h2 className="mb-8 font-display text-2xl font-semibold text-white md:text-3xl">What People Say</h2>
         <div className="grid gap-6 md:grid-cols-3">
           {TESTIMONIALS.map((t) => (
-            <div key={t.name} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <p className="text-sm italic text-slate-600">"{t.quote}"</p>
+            <div key={t.name} className="rounded-2xl border border-slate-800 bg-surface p-6 shadow-sm">
+              <p className="text-sm italic text-slate-300">"{t.quote}"</p>
               <div className="mt-4 flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/20 font-semibold text-accent">
                   {t.name[0]}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-primary">{t.name}</p>
+                  <p className="text-sm font-semibold text-white">{t.name}</p>
                   <p className="text-xs text-slate-400">{t.role}</p>
                 </div>
               </div>
@@ -187,53 +218,50 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. BLOG HIGHLIGHTS */}
       <section className="bg-neutral py-16">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="mb-8 flex items-end justify-between">
-            <h2 className="font-display text-2xl font-semibold text-primary md:text-3xl">From the Blog</h2>
+            <h2 className="font-display text-2xl font-semibold text-white md:text-3xl">From the Blog</h2>
             <Link href="/blog" className="text-sm font-medium text-accent">Read more →</Link>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {BLOG_POSTS.map((p) => (
-              <div key={p.title} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                <h3 className="font-semibold text-primary">{p.title}</h3>
-                <p className="mt-2 text-sm text-slate-500">{p.excerpt}</p>
+              <div key={p.title} className="rounded-2xl border border-slate-800 bg-surface p-6 shadow-sm">
+                <h3 className="font-semibold text-white">{p.title}</h3>
+                <p className="mt-2 text-sm text-slate-400">{p.excerpt}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 8. FAQ */}
       <section className="mx-auto max-w-4xl px-4 py-16 md:px-8">
-        <h2 className="mb-8 font-display text-2xl font-semibold text-primary md:text-3xl">Frequently Asked Questions</h2>
-        <div className="divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white">
+        <h2 className="mb-8 font-display text-2xl font-semibold text-white md:text-3xl">Frequently Asked Questions</h2>
+        <div className="divide-y divide-slate-800 rounded-2xl border border-slate-800 bg-surface">
           {FAQS.map((f, i) => (
             <div key={f.q}>
               <button
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                className="flex w-full items-center justify-between px-6 py-4 text-left font-medium text-primary"
+                className="flex w-full items-center justify-between px-6 py-4 text-left font-medium text-white"
               >
                 {f.q}
                 <span className="text-accent">{openFaq === i ? "−" : "+"}</span>
               </button>
-              {openFaq === i && <p className="px-6 pb-4 text-sm text-slate-500">{f.a}</p>}
+              {openFaq === i && <p className="px-6 pb-4 text-sm text-slate-400">{f.a}</p>}
             </div>
           ))}
         </div>
       </section>
 
-      {/* NEWSLETTER + CTA */}
       <section className="mx-auto max-w-3xl px-4 pb-16 text-center md:px-8">
-        <h2 className="font-display text-2xl font-semibold text-primary">Stay in the loop</h2>
-        <p className="mt-2 text-slate-500">New listings and market notes, occasionally — no spam.</p>
+        <h2 className="font-display text-2xl font-semibold text-white">Stay in the loop</h2>
+        <p className="mt-2 text-slate-400">New listings and market notes, occasionally — no spam.</p>
         <form onSubmit={(e) => e.preventDefault()} className="mx-auto mt-5 flex max-w-md gap-2">
           <input
             type="email"
             required
             placeholder="you@example.com"
-            className="flex-1 rounded-full border border-slate-300 px-4 py-2 text-sm outline-none focus:border-accent"
+            className="flex-1 rounded-full border border-slate-700 bg-surface px-4 py-2 text-sm text-white placeholder:text-slate-400 outline-none focus:border-accent"
           />
           <button className="rounded-full bg-primary px-6 py-2 text-sm font-semibold text-white">Subscribe</button>
         </form>

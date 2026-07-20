@@ -19,7 +19,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeFilter, setActiveFilter] = useState<string>("all"); // "all" | type key
+  const [activeFilter, setActiveFilter] = useState<string>("all");
   const [recs, setRecs] = useState<any[]>([]);
 
   useEffect(() => {
@@ -52,16 +52,15 @@ export default function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 md:px-8">
-      <h1 className="mb-1 text-2xl font-bold text-primary">Welcome back, {session.user.name}</h1>
-      <p className="mb-8 text-slate-500">Manage your listings and see how they're performing.</p>
+      <h1 className="mb-1 text-2xl font-bold text-white">Welcome back, {session.user.name}</h1>
+      <p className="mb-8 text-slate-400">Manage your listings and see how they're performing.</p>
 
       <div className="grid gap-6 md:grid-cols-[240px_1fr]">
-        {/* Sidebar */}
-        <aside className="h-fit rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:sticky md:top-20">
+        <aside className="h-fit rounded-2xl border border-slate-800 bg-surface p-4 shadow-sm md:sticky md:top-20">
           <button
             onClick={() => setActiveFilter("all")}
             className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-sm font-semibold ${
-              activeFilter === "all" ? "bg-primary text-white" : "text-primary hover:bg-neutral"
+              activeFilter === "all" ? "bg-primary text-white" : "text-white hover:bg-neutral"
             }`}
           >
             <span>Total Listings</span>
@@ -75,7 +74,7 @@ export default function DashboardPage() {
                 key={t.key}
                 onClick={() => setActiveFilter(t.key)}
                 className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm ${
-                  activeFilter === t.key ? "bg-accent/20 font-semibold text-primary" : "text-slate-600 hover:bg-neutral"
+                  activeFilter === t.key ? "bg-accent/20 font-semibold text-accent" : "text-slate-300 hover:bg-neutral"
                 }`}
               >
                 <span>{t.emoji} {t.label}</span>
@@ -92,10 +91,9 @@ export default function DashboardPage() {
           </Link>
         </aside>
 
-        {/* Main content */}
         <div>
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-semibold text-primary">
+            <h2 className="font-semibold text-white">
               {activeFilter === "all" ? "All Listings" : TYPES.find((t) => t.key === activeFilter)?.label}
               <span className="ml-2 text-sm font-normal text-slate-400">({visible.length})</span>
             </h2>
@@ -104,17 +102,17 @@ export default function DashboardPage() {
           {loading ? (
             <div className="space-y-2">
               {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="h-14 animate-pulse rounded-xl bg-slate-200" />
+                <div key={i} className="h-14 animate-pulse rounded-xl bg-slate-700" />
               ))}
             </div>
           ) : visible.length === 0 ? (
-            <p className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-400">
+            <p className="rounded-2xl border border-dashed border-slate-700 p-8 text-center text-slate-400">
               No listings in this category yet.
             </p>
           ) : (
-            <div className="overflow-x-auto rounded-2xl border border-slate-200">
+            <div className="overflow-x-auto rounded-2xl border border-slate-800">
               <table className="w-full text-left text-sm">
-                <thead className="bg-neutral text-slate-500">
+                <thead className="bg-neutral text-slate-400">
                   <tr>
                     <th className="p-3">Title</th>
                     <th className="p-3">Type</th>
@@ -126,15 +124,15 @@ export default function DashboardPage() {
                 </thead>
                 <tbody>
                   {visible.map((p) => (
-                    <tr key={p._id} className="border-t border-slate-100">
-                      <td className="p-3 font-medium text-primary">{p.title}</td>
-                      <td className="p-3 capitalize text-slate-500">{p.type}</td>
+                    <tr key={p._id} className="border-t border-slate-800">
+                      <td className="p-3 font-medium text-white">{p.title}</td>
+                      <td className="p-3 capitalize text-slate-400">{p.type}</td>
                       <td className="p-3">{p.location}</td>
                       <td className="p-3">৳{p.price.toLocaleString()}</td>
                       <td className="p-3">{p.views}</td>
                       <td className="p-3 space-x-3">
                         <Link href={`/properties/${p._id}`} className="text-accent">View</Link>
-                        <Link href={`/properties/edit/${p._id}`} className="text-primary underline">Edit</Link>
+                        <Link href={`/properties/edit/${p._id}`} className="text-white underline">Edit</Link>
                         <button onClick={() => handleDelete(p._id)} className="text-red-500">Delete</button>
                       </td>
                     </tr>
@@ -144,10 +142,9 @@ export default function DashboardPage() {
             </div>
           )}
 
-          {/* AI Recommendations */}
           {recs.length > 0 && (
             <div className="mt-12">
-              <h2 className="mb-4 font-semibold text-primary">Recommended for You</h2>
+              <h2 className="mb-4 font-semibold text-white">Recommended for You</h2>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {recs.map(({ property, reason }) => (
                   <div key={property._id} className="flex flex-col gap-2">
