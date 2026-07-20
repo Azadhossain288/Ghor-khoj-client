@@ -6,7 +6,7 @@ import { api } from "@/lib/api";
 import { DIVISIONS } from "@/lib/constants";
 import PropertyCard from "@/components/PropertyCard";
 
-export default function PropertiesContext() {
+export default function PropertiesContent() {
   const searchParams = useSearchParams();
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -34,22 +34,22 @@ export default function PropertiesContext() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 md:px-8">
-      <h1 className="mb-6 text-2xl font-bold text-primary">Explore Properties</h1>
+      <h1 className="mb-6 text-2xl font-bold text-white">Explore Properties</h1>
 
       {/* Search + filters */}
       <div className="mb-8 grid gap-3 md:grid-cols-6">
         <input
           placeholder="Search by title..."
-          className="rounded-full border border-slate-300 px-4 py-2 text-sm md:col-span-2"
+          className="rounded-full border border-slate-700 bg-surface px-4 py-2 text-sm text-white placeholder:text-slate-400 md:col-span-2"
           onChange={(e) => setFilters((f) => ({ ...f, q: e.target.value }))}
         />
         <input
           placeholder="Location"
-          className="rounded-full border border-slate-300 px-4 py-2 text-sm"
+          className="rounded-full border border-slate-700 bg-surface px-4 py-2 text-sm text-white placeholder:text-slate-400"
           onChange={(e) => setFilters((f) => ({ ...f, location: e.target.value }))}
         />
         <select
-          className="rounded-full border border-slate-300 px-4 py-2 text-sm"
+          className="rounded-full border border-slate-700 bg-surface px-4 py-2 text-sm text-white placeholder:text-slate-400"
           onChange={(e) => setFilters((f) => ({ ...f, division: e.target.value }))}
         >
           <option value="">All divisions</option>
@@ -59,7 +59,7 @@ export default function PropertiesContext() {
         </select>
         <select
           value={filters.type}
-          className="rounded-full border border-slate-300 px-4 py-2 text-sm"
+          className="rounded-full border border-slate-700 bg-surface px-4 py-2 text-sm text-white placeholder:text-slate-400"
           onChange={(e) => setFilters((f) => ({ ...f, type: e.target.value }))}
         >
           <option value="">All types</option>
@@ -69,7 +69,7 @@ export default function PropertiesContext() {
           <option value="commercial">Commercial</option>
         </select>
         <select
-          className="rounded-full border border-slate-300 px-4 py-2 text-sm"
+          className="rounded-full border border-slate-700 bg-surface px-4 py-2 text-sm text-white placeholder:text-slate-400"
           onChange={(e) => setFilters((f) => ({ ...f, sort: e.target.value }))}
         >
           <option value="newest">Newest</option>
@@ -83,7 +83,7 @@ export default function PropertiesContext() {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {loading
           ? Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="h-72 animate-pulse rounded-2xl bg-slate-200" />
+              <div key={i} className="h-72 animate-pulse rounded-2xl bg-slate-700" />
             ))
           : items.map((p) => <PropertyCard key={p._id} property={p} />)}
       </div>
@@ -97,7 +97,7 @@ export default function PropertiesContext() {
             key={i}
             onClick={() => setPage(i + 1)}
             className={`h-9 w-9 rounded-full text-sm ${
-              page === i + 1 ? "bg-primary text-white" : "bg-white text-primary border border-slate-300"
+              page === i + 1 ? "bg-primary text-white" : "bg-surface text-white border border-slate-700"
             }`}
           >
             {i + 1}
