@@ -1,4 +1,4 @@
-const API_BASE = "https://ghor-khoj-server.onrender.com";
+const API_BASE = "";
 
 async function request(path: string, options: RequestInit = {}) {
   const res = await fetch(`${API_BASE}${path}`, {

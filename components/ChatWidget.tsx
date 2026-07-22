@@ -5,7 +5,7 @@ import { useState, useRef } from "react";
 type Msg = { role: "user" | "assistant"; content: string };
 
 const FOLLOW_UPS = ["Show 2-bedroom flats under 30k", "Best areas for families", "Compare rent vs buy"];
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE = "";
 
 function newSessionId() {
   return `session-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
